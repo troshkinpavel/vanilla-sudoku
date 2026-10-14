@@ -1,0 +1,36 @@
+/* Pixel: 8-bit console, Sweetie-16 palette, chunky borders, stepped motion. */
+:root[data-theme="pixel"] {
+    --watermark-size: min(13vw, 30vh);  /* Press Start 2P glyphs are a full em wide */
+    -webkit-font-smoothing: none;
+    font-size: 12px;  /* Press Start 2P is wide; rem-based sizes scale down with it */
+    --font: "Press Start 2P", monospace;
+    --frame: 4px;
+    --shadow: 6px 6px 0 var(--line);
+    --button-shadow: 3px 3px 0 var(--line);
+    --digit-shadow: 3px 3px 0 color-mix(in srgb, var(--line) 45%, transparent);
+    --pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' shape-rendering='crispEdges'%3E%3Cpath d='M30 30h3v3h-3zM48 30h3v3h-3zM33 33h3v3h-3zM45 33h3v3h-3zM30 36h3v3h-3zM33 36h3v3h-3zM36 36h3v3h-3zM39 36h3v3h-3zM42 36h3v3h-3zM45 36h3v3h-3zM48 36h3v3h-3zM27 39h3v3h-3zM30 39h3v3h-3zM36 39h3v3h-3zM39 39h3v3h-3zM42 39h3v3h-3zM48 39h3v3h-3zM51 39h3v3h-3zM24 42h3v3h-3zM27 42h3v3h-3zM30 42h3v3h-3zM33 42h3v3h-3zM36 42h3v3h-3zM39 42h3v3h-3zM42 42h3v3h-3zM45 42h3v3h-3zM48 42h3v3h-3zM51 42h3v3h-3zM54 42h3v3h-3zM24 45h3v3h-3zM30 45h3v3h-3zM33 45h3v3h-3zM36 45h3v3h-3zM39 45h3v3h-3zM42 45h3v3h-3zM45 45h3v3h-3zM48 45h3v3h-3zM54 45h3v3h-3zM24 48h3v3h-3zM30 48h3v3h-3zM48 48h3v3h-3zM54 48h3v3h-3zM33 51h3v3h-3zM36 51h3v3h-3zM42 51h3v3h-3zM45 51h3v3h-3zM6 6h3v3h-3zM78 12h3v3h-3zM12 78h3v3h-3zM84 84h3v3h-3z'/%3E%3C/svg%3E");
+    --pattern-size: 96px;
+    --fg: light-dark(#1a1c2c, #f4f4f4);
+    --bg: light-dark(#e4eefa, #1a1c2c);
+    --cell-bg: light-dark(#f4f4f4, #29366f);
+    --line: light-dark(#29366f, #0d0e17);
+    --line-soft: var(--line);
+    --muted: light-dark(#566c86, #94b0c2);
+    --accent: light-dark(#3b5dc9, #73eff7);
+    --hinted: light-dark(#38b764, #a7f070);
+    --danger: light-dark(#b13e53, #ef7d57);
+    --complete: light-dark(#d4f5c0, #257179);
+    --peer: light-dark(#d9e3f2, #333c57);
+    --same: light-dark(#ffcd75, #5d275d);
+    --selected: light-dark(#73eff7, #3b5dc9);
+    --pattern: light-dark(rgba(41, 54, 111, .14), rgba(115, 239, 247, .1));
+
+    * { animation-timing-function: steps(4) !important; }
+    .icon { stroke-linecap: square; stroke-linejoin: miter; }
+
+    /* The wide font would wrap the header: smaller labels, ✕ icon instead of the word "Mistakes". */
+    .difficulty button { padding: 6px 10px; font-size: .8rem; }
+    .stats { font-size: 1rem; }
+    .mistakes .only-compact { display: inline-block; }
+    .mistakes .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+}

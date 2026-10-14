@@ -1,0 +1,177 @@
+/* The board: table, 3×3 blocks, cells and their completion animations. */
+
+#sudoku {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    /* As wide as the board: header/footer wrap inside it instead of stretching the grid apart. */
+    width: min-content;
+
+    .table {
+        position: relative;
+        display: grid;
+        /* Sized by the fixed-size cells, so no layout can stretch or squeeze the board. */
+        grid-template-columns: repeat(3, auto);
+        grid-template-rows: repeat(3, auto);
+        /* When the toolbar is wider than the board (short window: cells shrink to fit the height),
+           stretching would hand the spare width to the blocks as gaps beside the cells. Centre instead. */
+        width: fit-content;
+        margin-inline: auto;
+        gap: var(--table-inner-gap);
+        padding: var(--table-gap);
+        border: var(--frame) solid;
+        box-shadow: var(--shadow);
+        background: var(--board-bg);
+        backdrop-filter: var(--board-filter);
+        text-align: center;
+        border-radius: var(--table-radius);
+
+        .block {
+            display: grid;
+            grid-template-columns: repeat(3, var(--table-cell-size));
+            grid-template-rows: repeat(3, var(--table-cell-size));
+            border: var(--border-box-width) solid var(--line);
+
+            .cell {
+                &[row-complete],
+                &[col-complete] {
+                    background: var(--complete);
+                }
+
+                /* COLUMN completion: requires both col-complete AND .animate*/
+
+                &[data-column].col-complete.animate {
+                    --animation-speed: 0.15s;
+                    --animation-timing: ease;
+
+                    &[data-row="1"] {
+                        animation: var(--animation-speed) line-complete 0s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="2"] {
+                        animation: var(--animation-speed) line-complete 0.1s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="3"] {
+                        animation: var(--animation-speed) line-complete 0.2s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="4"] {
+                        animation: var(--animation-speed) line-complete 0.3s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="5"] {
+                        animation: var(--animation-speed) line-complete 0.4s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="6"] {
+                        animation: var(--animation-speed) line-complete 0.5s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="7"] {
+                        animation: var(--animation-speed) line-complete 0.6s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="8"] {
+                        animation: var(--animation-speed) line-complete 0.7s var(--animation-timing) forwards;
+                    }
+
+                    &[data-row="9"] {
+                        animation: var(--animation-speed) line-complete 0.8s var(--animation-timing) forwards;
+                    }
+                }
+
+                /* ROW completion: requires both row-complete AND .animate */
+
+                &[data-row].row-complete.animate {
+                    --animation-speed: 0.15s;
+                    --animation-timing: ease;
+
+                    &[data-column="1"] {
+                        animation: var(--animation-speed) line-complete 0s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="2"] {
+                        animation: var(--animation-speed) line-complete 0.1s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="3"] {
+                        animation: var(--animation-speed) line-complete 0.2s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="4"] {
+                        animation: var(--animation-speed) line-complete 0.3s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="5"] {
+                        animation: var(--animation-speed) line-complete 0.4s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="6"] {
+                        animation: var(--animation-speed) line-complete 0.5s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="7"] {
+                        animation: var(--animation-speed) line-complete 0.6s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="8"] {
+                        animation: var(--animation-speed) line-complete 0.7s var(--animation-timing) forwards;
+                    }
+
+                    &[data-column="9"] {
+                        animation: var(--animation-speed) line-complete 0.8s var(--animation-timing) forwards;
+                    }
+                }
+            }
+
+            .cell {
+                all: unset;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: var(--table-cell-size);
+                height: var(--table-cell-size);
+                font-size: calc((var(--table-cell-size) / 50px) * 2rem);
+                user-select: none;
+                background: var(--cell-bg);
+                box-sizing: border-box;
+
+                &.conflict {
+                    box-shadow: 0 0 6px 1px inset var(--danger);
+                    z-index: 1;
+                }
+
+                &:not(:read-only):focus {
+                    background: var(--selected);
+                    anchor-name: --my-anchor;
+                }
+
+                &:where(:read-only) {
+                    color: var(--muted);
+                    cursor: not-allowed;
+                }
+
+                &:where(:not(:nth-child(3n + 1)), :not(:nth-child(3n + 2)), :not(:nth-child(3n + 3))) {
+                    border: 0.5px solid var(--line-soft);
+                }
+            }
+
+            &:nth-child(1) {
+                border-top-left-radius: calc(var(--table-radius) - var(--table-gap));
+            }
+
+            &:nth-child(3) {
+                border-top-right-radius: calc(var(--table-radius) - var(--table-gap));
+            }
+
+            &:nth-child(7) {
+                border-bottom-left-radius: calc(var(--table-radius) - var(--table-gap));
+            }
+
+            &:nth-child(9) {
+                border-bottom-right-radius: calc(var(--table-radius) - var(--table-gap));
+            }
+        }
+    }
+}

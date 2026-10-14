@@ -1,0 +1,60 @@
+/* Compact layout for phones and small windows: icon-only controls in one toolbar row above the board.
+   Touch-screen tweaks at the end. */
+@media (max-width: 600px) {
+    :root {
+        /* horizontal: #app padding + board padding/borders.
+           vertical: #app + board padding (2.5rem), plus fixed px: toolbar row (≤34px with Pixel's thick frame),
+           its 10px gap, board frame + block borders (≤14px), and a little slack. */
+        --table-cell-size: min(60px, calc((100vw - 3rem - 10px) / 9), calc((100vh - 2.5rem - 60px) / 9));
+    }
+    #app { padding: .75rem; }
+
+    #sudoku {
+        display: grid;
+        /* auto, not 1fr: a board spanning a flexible track wouldn't count toward the min-content width */
+        grid-template-columns: auto auto;
+        grid-template-areas: "header footer" "table table";
+        gap: 10px 6px;
+    }
+    #sudoku > header { grid-area: header; flex-wrap: nowrap; justify-self: start; gap: 8px; }
+    #sudoku > footer { grid-area: footer; flex-wrap: nowrap; justify-self: end; }
+    #sudoku > .table { grid-area: table; }
+    .hint-text { display: none; }
+
+    .only-compact { display: inline-block; }
+    .settings-btn.in-header { display: none; }
+    .settings-btn.in-footer { display: inline-flex; }
+    /* Hidden visually, still read by screen readers. */
+    .label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .difficulty button,
+    .action {
+        box-sizing: border-box;
+        height: 30px;
+        padding: 0 5px;
+        font-size: 1rem;
+    }
+    .difficulty button { display: inline-flex; align-items: center; height: 26px; } /* plus the group's 2px border */
+    .stats { gap: 8px; font-size: .9rem; }
+    .stat { gap: 4px; }
+    .actions { gap: 4px; }
+
+    /* Icon-only buttons: Terminal's [brackets] and larger text would double the toolbar's width. */
+    :root[data-theme="terminal"] {
+        .action::before, .action::after { content: none; }
+        .action, .difficulty button { font-size: 1rem; }
+        .stats { font-size: 1.25rem; }
+    }
+}
+
+/* Keyboard tips mean nothing on touch screens, and they would wrap the footer. */
+@media (hover: none) {
+    .hint-text { display: none; }
+}

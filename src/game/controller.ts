@@ -1,5 +1,5 @@
 import type { Difficulty, Digit } from "../core/types.ts";
-import { generateSudoku } from "../core/generator.ts";
+import { generateSudoku } from "../core/level-generator.ts";
 import {
     cellKey, computeCompleteness, computeConflicts, isComplete, type Completeness,
 } from "../core/validation.ts";

@@ -1,0 +1,64 @@
+/* Page: hidden attribute, background pattern, body, inputs, the app container and its watermark. */
+
+/* `all: unset` on buttons would otherwise override the hidden attribute */
+[hidden] {
+    display: none !important;
+}
+
+/* Theme backdrop pattern (classic: graph paper echoing the board, a dot per cell corner, a cross per block).
+   Used as a mask so one SVG takes its colour from the theme's --pattern. */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--pattern);
+    mask: var(--pattern-image) 0 0 / var(--pattern-size) repeat;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* Hide the number spinners; `display: none` here crashes Chrome on hover. */
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    caret-color: transparent;
+    -moz-appearance: textfield; /* Firefox */
+}
+
+
+#app {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Faint "SUDOKU" watermark behind the game (above the pattern, below everything else).
+   Lives on #app so it moves with the game into another window; empty alt text keeps it from screen readers. */
+#app::before {
+    content: "SUDOKU" / "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    pointer-events: none;
+    font-size: var(--watermark-size, min(19vw, 42vh));
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    color: color-mix(in srgb, var(--fg) 6%, transparent);
+}

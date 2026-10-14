@@ -1,0 +1,37 @@
+/* Brutalism (neo-brutalist): raw grotesk, thick black frames, square corners, big hard shadows,
+   loud flat colour blocks, diagonal hatching. */
+:root[data-theme="brutal"] {
+    --font: "Space Grotesk", sans-serif;
+    --frame: 4px;
+    --radius: 0;
+    --shadow: 8px 8px 0 var(--line);
+    --button-shadow: 4px 4px 0 var(--line);
+    --digit-shadow: none;
+    --pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M-6 6 6-6M0 24 24 0M18 30 30 18' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+    --pattern-size: 24px;
+    --fg: light-dark(#000, #fff);
+    --bg: light-dark(#fffdf5, #0d0d0d);
+    --cell-bg: light-dark(#fff, #161616);
+    --line: light-dark(#000, #fff);
+    --line-soft: light-dark(#000, #8a8a8a);
+    --muted: light-dark(#000, #fff);
+    --accent: light-dark(#0047ff, #6b8cff);
+    /* Board colours chosen so every digit colour stays readable on every highlight it can land on. */
+    --hinted: light-dark(#0b5f58, #5eead4);      /* teal: readable on all the tints below */
+    --danger: light-dark(#d40000, #ff6b5a);
+    --complete: light-dark(#ecf8cc, #1d2a0f);    /* finished row/column/block: soft lime */
+    --peer: light-dark(#fff4c2, #262626);        /* selected cell's row/column/block: soft yellow */
+    --same: light-dark(#ffe45c, #3d3200);        /* same digit: the loud yellow */
+    --selected: light-dark(#bdefff, #0f4250);    /* selected cell: cyan, readable with every digit colour */
+    --hover: light-dark(#ffd400, #6b5a00);
+    --glass: light-dark(rgba(255, 253, 245, .9), rgba(13, 13, 13, .9));
+    --pattern: light-dark(rgba(0, 0, 0, .07), rgba(255, 255, 255, .06));
+
+    .action, .difficulty button, .stats, .settings legend { text-transform: uppercase; letter-spacing: .04em; }
+    .difficulty button[aria-pressed="true"] { background: var(--same); color: var(--fg); }
+    .action:hover { background: var(--same); color: var(--fg); translate: -2px -2px; box-shadow: 6px 6px 0 var(--line); }
+
+    /* A mistake keeps its own pale red background on top of any highlight (selected, same digit, done),
+       so the red digit never sits on yellow, pink or lime. */
+    #sudoku .table .block .cell.conflict { background: light-dark(#ffe1dc, #3a1410); }
+}

@@ -1,0 +1,24 @@
+/* All styles in cascade order: later sections override earlier ones. */
+
+@import "./tokens.css";
+
+/* Themes override the tokens (and add a few signature touches). Classic is the default. */
+@import "./themes/classic.css";
+@import "./themes/pixel.css";
+@import "./themes/terminal.css";
+@import "./themes/cartoon.css";
+@import "./themes/brutal.css";
+@import "./themes/glass.css";
+
+@import "./base.css";
+@import "./components/board.css";
+@import "./components/keypad.css";
+@import "./components/toolbar.css";
+@import "./components/settings.css";
+
+/* After the components: the compact layout overrides their sizes, Terminal's included. */
+@import "./layout/responsive.css";
+
+@import "./components/board-states.css";
+@import "./components/dialog.css";
+@import "./animations.css";

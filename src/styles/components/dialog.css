@@ -1,0 +1,16 @@
+/* End-of-game dialog. */
+
+#result {
+    border: var(--frame) solid;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 36px;
+    text-align: center;
+    color: inherit;
+    background: var(--bg);
+
+    &[open] { animation: deal .25s ease-out; }
+    &::backdrop { background: var(--glass); backdrop-filter: blur(3px); }
+    h2 { margin: 0 0 8px; font-size: 2rem; }
+    p { margin: 0 0 20px; font-weight: 500; }
+}

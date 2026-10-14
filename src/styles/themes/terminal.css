@@ -1,0 +1,41 @@
+/* Terminal: ASCII/phosphor CRT. Green givens, amber input, [bracketed] buttons, scanlines in the dark. */
+:root[data-theme="terminal"] {
+    --font: "VT323", monospace;
+    /* sharp ghost offset, plus the CRT glow (dark only) the cells would otherwise lose */
+    --digit-shadow: 2px 2px 0 color-mix(in srgb, currentColor 28%, transparent),
+        0 0 6px light-dark(transparent, rgba(57, 255, 122, .45));
+    --pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='72' font-family='monospace' font-size='12'%3E%3Ctext x='6' y='18'%3E0110 1%3C/text%3E%3Ctext x='72' y='54'%3E%26gt%3B_ 01%3C/text%3E%3C/svg%3E");
+    --pattern-size: 132px 72px;
+    --fg: light-dark(#1d3b1d, #39ff7a);
+    --bg: light-dark(#f3f1e7, #050906);
+    --cell-bg: light-dark(#f3f1e7, #050906);
+    --line: light-dark(#7aa37a, #1c5c2f);
+    --line-soft: var(--line);
+    --muted: light-dark(#2f5f2f, #22c55e);
+    --accent: light-dark(#b35c00, #ffb000);
+    --hinted: light-dark(#0b6e99, #5fd7ff);
+    --danger: light-dark(#c0392b, #ff5f56);
+    --complete: light-dark(#e3ecd9, #0b2213);
+    --peer: light-dark(#e8eadb, #0b170e);
+    --same: light-dark(#d2e6c4, #12402a);
+    --selected: light-dark(#c5e1b5, #1d5e36);
+    --hover: light-dark(rgba(29, 59, 29, .08), rgba(57, 255, 122, .1));
+    --glass: light-dark(rgba(243, 241, 231, .8), rgba(5, 9, 6, .85));
+    --pattern: light-dark(rgba(29, 59, 29, .12), rgba(57, 255, 122, .1));
+
+    #app { text-shadow: 0 0 6px light-dark(transparent, rgba(57, 255, 122, .45)); }
+    .action::before { content: "["; }
+    .action::after { content: "]"; }
+    /* VT323 is narrow and small: larger text, same layout widths. */
+    .stats { font-size: 1.5rem; font-weight: 400; }
+    .action, .difficulty button { font-size: 1.25rem; font-weight: 400; }
+
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 5;
+        pointer-events: none;
+        background: repeating-linear-gradient(transparent 0 2px, light-dark(transparent, rgba(0, 0, 0, .22)) 2px 3px);
+    }
+}

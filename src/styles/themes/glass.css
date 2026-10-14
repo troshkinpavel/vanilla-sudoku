@@ -1,0 +1,47 @@
+/* Glass ("liquid glass" / glassmorphism): aurora gradient, frosted translucent board and pill buttons. */
+:root[data-theme="glass"] {
+    --font: "Plus Jakarta Sans", sans-serif;
+    --frame: 1px;
+    --radius: 16px;
+    --table-radius: 22px;
+    --shadow: 0 24px 60px light-dark(rgba(80, 60, 180, .18), rgba(0, 0, 0, .55)),
+        inset 0 1px 0 light-dark(rgba(255, 255, 255, .8), rgba(255, 255, 255, .12));
+    --button-shadow: 0 6px 18px light-dark(rgba(80, 60, 180, .12), rgba(0, 0, 0, .35));
+    --digit-shadow: 0 1px 0 light-dark(rgba(255, 255, 255, .8), transparent);
+    --bg-image:
+        radial-gradient(circle at 12% 18%, light-dark(#ffc6e2, #5a1f7a) 0, transparent 42%),
+        radial-gradient(circle at 88% 12%, light-dark(#b9d4ff, #123f73) 0, transparent 45%),
+        radial-gradient(circle at 78% 88%, light-dark(#c8f5e6, #0f5a52) 0, transparent 45%),
+        radial-gradient(circle at 20% 85%, light-dark(#e6d4ff, #3a1f6e) 0, transparent 40%);
+    --board-bg: light-dark(rgba(255, 255, 255, .28), rgba(255, 255, 255, .04));
+    --board-filter: blur(20px) saturate(160%);
+    --fg: light-dark(#1d2340, #eef0ff);
+    --bg: light-dark(#eef1fb, #0b0d1a);
+    --cell-bg: light-dark(rgba(255, 255, 255, .45), rgba(255, 255, 255, .05));
+    --line: light-dark(rgba(29, 35, 64, .32), rgba(255, 255, 255, .28));
+    --line-soft: light-dark(rgba(29, 35, 64, .1), rgba(255, 255, 255, .08));
+    --muted: light-dark(#1d2340, #eef0ff);
+    --accent: light-dark(#6d4aff, #b39dff);
+    --hinted: light-dark(#0f9a77, #34d399);
+    --danger: light-dark(#f43f5e, #fb7185);
+    --complete: light-dark(rgba(16, 185, 129, .16), rgba(52, 211, 153, .14));
+    --peer: light-dark(rgba(109, 74, 255, .08), rgba(167, 139, 250, .1));
+    --same: light-dark(rgba(109, 74, 255, .22), rgba(167, 139, 250, .26));
+    --selected: light-dark(rgba(109, 74, 255, .34), rgba(167, 139, 250, .4));
+    --hover: light-dark(rgba(255, 255, 255, .55), rgba(255, 255, 255, .1));
+    --glass: light-dark(rgba(255, 255, 255, .5), rgba(20, 22, 40, .55));
+    --pattern: transparent;
+
+    /* Frosted controls: translucent fill, hairline light border, background blur. */
+    #sudoku .table, .action, .difficulty, #result, .settings {
+        border-color: light-dark(rgba(255, 255, 255, .85), rgba(255, 255, 255, .16));
+    }
+    .action, .difficulty {
+        border-radius: 999px;
+        background: light-dark(rgba(255, 255, 255, .4), rgba(255, 255, 255, .06));
+        backdrop-filter: blur(12px) saturate(160%);
+    }
+    .difficulty button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+    .action:hover { background: var(--accent); color: #fff; }
+    #result, .settings { background: var(--glass); backdrop-filter: blur(24px) saturate(160%); }
+}

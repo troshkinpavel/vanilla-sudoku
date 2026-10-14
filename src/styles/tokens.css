@@ -1,0 +1,42 @@
+/* Design tokens shared by every theme: sizes, borders, shadows, fonts, the background pattern. Colours are set per theme. */
+
+:root {
+    color-scheme: light dark;   /* "auto" mode; [data-mode] below forces one */
+    color: var(--fg);
+    background-color: var(--bg);
+    background-image: var(--bg-image);
+    background-attachment: fixed;
+
+    font-family: var(--font);
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --table-gap: .5rem;
+    --table-inner-gap: 0rem;
+    --border-box-width: 1px;
+    --table-radius: 0rem;
+    --frame: 2px;           /* board, button and dialog border width */
+    --radius: 0;            /* button and dialog corners */
+    --shadow: none;         /* board shadow */
+    --button-shadow: none;
+    /* Hard-edged effect on board digits; currentColor tints it to givens/entries/hints/conflicts. */
+    --digit-shadow: 2px 2px 0 color-mix(in srgb, currentColor 20%, transparent);
+    --font: "Bai Jamjuree", sans-serif;
+    --bg-image: none;           /* page gradient behind everything (Glass) */
+    --board-bg: var(--bg);      /* board padding ring; opaque so the pattern stops at the frame */
+    --board-filter: none;       /* backdrop-filter on the board (Glass) */
+    --pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg fill='black'%3E%3Ccircle cx='30' cy='30' r='1.6'/%3E%3Ccircle cx='30' cy='90' r='1.6'/%3E%3Ccircle cx='30' cy='150' r='1.6'/%3E%3Ccircle cx='90' cy='30' r='1.6'/%3E%3Ccircle cx='90' cy='150' r='1.6'/%3E%3Ccircle cx='150' cy='30' r='1.6'/%3E%3Ccircle cx='150' cy='90' r='1.6'/%3E%3Ccircle cx='150' cy='150' r='1.6'/%3E%3C/g%3E%3Cpath d='M82 90h16M90 82v16' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    --pattern-size: 180px;
+    /* 9 cells + board padding/borders must fit the viewport on phones */
+    /* …and the height too, so a short window still shows the whole game */
+    --table-cell-size: min(60px, calc((100vw - 4.5rem) / 9), calc((100vh - 14rem) / 9));
+}
+
+:root[data-mode="light"] { color-scheme: light; }
+:root[data-mode="dark"] { color-scheme: dark; }

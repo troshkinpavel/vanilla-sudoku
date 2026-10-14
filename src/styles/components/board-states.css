@@ -1,0 +1,27 @@
+/* Cell states: highlights, digit colours and one-shot animations. Loaded after the base cell rules so they win. */
+
+#sudoku .table {
+    .block[block-complete] .cell { background: var(--complete); }
+    .block.block-pulse { animation: block-pulse .5s ease; z-index: 1; }
+
+    .block .cell {
+        transition: background .15s;
+        text-shadow: var(--digit-shadow);
+        caret-color: transparent; /* `all: unset` on .cell drops the input[type=number] rule */
+
+        &.peer { background: var(--peer); }
+        &.same-digit { background: var(--same); }
+        &:read-only:focus { background: var(--selected); }
+        &:not(:read-only) { color: var(--accent); }
+        &.hinted { color: var(--hinted); }
+        &.conflict { color: var(--danger); }
+        &:disabled { cursor: default; }
+
+        &.deal { animation: deal .35s var(--deal-delay, 0ms) ease-out backwards; }
+        &.pop { animation: pop .2s ease-out; }
+        &.shake { animation: shake .35s ease; }
+        &.wave { animation: wave .5s var(--wave-delay, 0ms) ease; }
+    }
+
+    .keypad button.used-up { opacity: .3; }
+}

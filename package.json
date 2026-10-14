@@ -6,9 +6,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && vite build --mode bundle && vite build --mode pen",
+    "build:site": "tsc && vite build",
+    "build:bundle": "tsc && vite build --mode bundle",
+    "build:pen": "tsc && vite build --mode pen",
     "preview": "vite preview",
-    "check": "node src/core/validation.check.ts"
+    "check": "node tests/core.check.ts"
   },
   "devDependencies": {
     "typescript": "~5.9.3",

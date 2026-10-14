@@ -1,0 +1,90 @@
+/* Header and footer bars: difficulty, stats, action buttons, icons. */
+
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.difficulty {
+    display: flex;
+    border: var(--frame) solid;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--button-shadow);
+
+    button {
+        all: unset;
+        padding: 6px 14px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background .2s, color .2s;
+
+        &:hover { background: var(--hover); }
+        &[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+        &:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; } /* group clips overflow */
+    }
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 1.25rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.mistakes.flash { animation: flash .6s ease; }
+
+.action {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: var(--frame) solid;
+    border-radius: var(--radius);
+    box-shadow: var(--button-shadow);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background .2s, color .2s, translate .1s;
+
+    &:hover { background: var(--fg); color: var(--bg); }
+    &:active { translate: 1px 1px; box-shadow: none; }
+    &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+}
+
+.stat { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+/* Fixed boxes for numbers that change: Bai Jamjuree and Fredoka have no tabular digits, so
+   tabular-nums alone can't stop the header from shifting. 1ch = width of "0", about the widest digit;
+   a fixed width (overflow stays visible) means even a hair-wider glyph never moves the layout. */
+#timer { display: inline-block; width: 5ch; }
+#mistakes-count { display: inline-block; width: 1ch; text-align: center; }
+
+.only-compact { display: none; }
+
+.icon rect.on { fill: currentColor; }
+
+.icon {
+    flex: none;
+    width: 1.1em;
+    height: 1.1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.hint-text {
+    margin: -8px 0 0;
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.actions { display: flex; gap: 12px; }

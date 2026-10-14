@@ -1,4 +1,4 @@
-import type { UIRefs } from "./refs.ts";
+import type { UIRefs } from "../ui/refs.ts";
 
 const STORAGE_KEY = "sudoku-settings"; // also read by the inline script in the page head
 
@@ -8,6 +8,8 @@ const STORAGE_KEY = "sudoku-settings"; // also read by the inline script in the 
  */
 export function initSettings(refs: UIRefs) {
     const root = document.documentElement;
+    // Nothing saved yet: start in this build's default theme (Classic needs no attribute).
+    if (!root.dataset.theme && __DEFAULT_THEME__ !== "classic") root.dataset.theme = __DEFAULT_THEME__;
 
     for (const name of ["mode", "theme"] as const) {
         const radios = [...refs.settings.querySelectorAll<HTMLInputElement>(`input[name="${name}"]`)];

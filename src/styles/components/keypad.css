@@ -1,0 +1,84 @@
+/* Pop-up number pad, anchored next to the focused cell. */
+
+#sudoku .table {
+        &:has(.block > .cell:nth-child(3n):focus) .keypad {
+            position-area: span-left bottom;
+        }
+
+        &:has(.block > .cell:nth-child(4n):focus) .keypad {
+            position-area: right span-bottom;
+        }
+
+        &:has(.block > .cell:nth-child(5n):focus) .keypad {
+            position-area: center;
+        }
+
+        &:has(.block > .cell:nth-child(6n):focus) .keypad {
+            position-area: left span-bottom;
+        }
+
+        &:has(.block > .cell:nth-child(7n):focus) .keypad {
+            position-area: span-right top;
+        }
+
+        &:has(.block > .cell:nth-child(8n):focus) .keypad {
+            position-area: span-right top;
+        }
+
+        &:has(.block > .cell:nth-child(9n):focus) .keypad {
+            position-area: span-left top;
+        }
+
+        &:has(div input:not(:read-only):focus) .keypad {
+            display: grid;
+            animation: anim 0.2s ease-in-out forwards;
+        }
+
+        .keypad {
+            position: fixed;
+            position-anchor: --my-anchor;
+            position-area: span-right bottom;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: calc(var(--table-cell-size) * 2);
+            height: calc(var(--table-cell-size) * 2);
+            box-shadow: 0 0 8px 0 rgba(0, 0, 0, .6);
+            display: none;
+            opacity: 0;
+            font-size: calc((var(--table-cell-size) / 75px) * 2rem);
+            border: 2px solid var(--line);
+            box-sizing: border-box;
+            z-index: 2;
+            background: var(--glass);
+            backdrop-filter: blur(6px);
+
+            button {
+                all: unset;
+                border-right: 1px solid var(--line);
+                border-bottom: 1px solid var(--line);
+                overflow: hidden;
+                box-sizing: border-box;
+                cursor: pointer;
+
+                &:hover {
+                    background: var(--hover);
+                }
+
+                &:nth-child(3n) {
+                    border-right-color: transparent;
+                }
+
+                &:nth-child(3n+1) {
+                    border-left-color: transparent;
+                }
+
+                &:nth-child(-n+3) {
+                    border-top-color: transparent;
+                }
+
+                &:nth-child(n+7):nth-child(-n+9) {
+                    border-bottom-color: transparent;
+                }
+            }
+        }
+}

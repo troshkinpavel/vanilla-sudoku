@@ -1,0 +1,62 @@
+/* Keyframes, and the reduced-motion override. */
+
+@keyframes anim {
+    from {
+        opacity: 0;
+        scale: 0;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+@keyframes line-complete {
+    0% {
+        scale: 1;
+        z-index: 1;
+    }
+    50% {
+        scale: 1.5;
+        z-index: 3;
+    }
+    100% {
+        scale: 1;
+        z-index: 1;
+    }
+}
+
+@keyframes deal {
+    from { opacity: 0; scale: .6; }
+    to { opacity: 1; scale: 1; }
+}
+
+@keyframes pop {
+    50% { scale: 1.25; }
+}
+
+@keyframes shake {
+    20%, 60% { translate: -4px 0; }
+    40%, 80% { translate: 4px 0; }
+}
+
+@keyframes flash {
+    30% { color: var(--danger); scale: 1.15; }
+}
+
+@keyframes block-pulse {
+    50% { scale: 1.04; box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 45%, transparent); }
+}
+
+@keyframes wave {
+    40% { translate: 0 -10px; background: var(--same); }
+}
+
+/* Keep animations near-instant (not "none") so animationend still fires and the JS cleans up classes. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 1ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 1ms !important;
+    }
+}

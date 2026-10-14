@@ -3,6 +3,7 @@ import { BOX, SIZE } from "../core/config.ts";
 
 export interface UIRefs {
     app: HTMLElement;             // everything that moves into picture-in-picture
+    sudoku: HTMLElement;          // the game column: bars, board, hint line
     table: HTMLElement;
     cells: HTMLInputElement[][];  // [row][col], 0-based
     blocks: HTMLElement[];        // index = band row * 3 + band column, matching the validation units
@@ -18,10 +19,6 @@ export interface UIRefs {
     result: HTMLDialogElement;
     resultTitle: HTMLElement;
     resultText: HTMLElement;
-    pip: HTMLButtonElement;
-    pipLabel: HTMLElement;
-    pipPlaceholder: HTMLElement;
-    pipReturn: HTMLButtonElement;
     settings: HTMLElement;
 }
 
@@ -35,6 +32,7 @@ export function initUIRefs(root: ParentNode = document): UIRefs {
     const sudoku = need<HTMLElement>(root, "#sudoku");
     return {
         app: need(root, "#app"),
+        sudoku,
         table: need(sudoku, ".table"),
         cells: range(SIZE).map(r => range(SIZE).map(c =>
             need<HTMLInputElement>(sudoku, `input.cell[data-row="${r + 1}"][data-column="${c + 1}"]`))),
@@ -52,10 +50,6 @@ export function initUIRefs(root: ParentNode = document): UIRefs {
         result: need(root, "#result"),
         resultTitle: need(root, "#result-title"),
         resultText: need(root, "#result-text"),
-        pip: need(sudoku, "#pip"),
-        pipLabel: need(sudoku, "#pip-label"),
-        pipPlaceholder: need(root, "#pip-placeholder"),
-        pipReturn: need(root, "#pip-return"),
         settings: need(root, "#settings"),
     };
 }

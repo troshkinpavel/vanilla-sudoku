@@ -1,0 +1,7 @@
+/* Picture-in-picture: the note left in the page while the game is popped out. */
+
+#pip-placeholder {
+    margin: auto;
+    text-align: center;
+    font-size: 1.25rem;
+}

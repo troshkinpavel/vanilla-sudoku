@@ -1,0 +1,65 @@
+/* Settings menu: mode and theme. */
+
+/* Top-right in both layouts: header end on desktop, toolbar end in compact mode. Same popover. */
+.settings-btn { anchor-name: --settings; padding: 6px 8px; }
+.settings-btn.in-footer { display: none; }
+
+.settings {
+    margin: 0;
+    padding: 14px 16px;
+    border: var(--frame) solid;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), 0 8px 24px rgba(0, 0, 0, .18);
+    color: var(--fg);
+    background: var(--bg);
+    font: inherit;
+
+    &:popover-open { animation: deal .15s ease-out; }
+
+    fieldset { margin: 0; padding: 0; border: 0; }
+    fieldset + fieldset { margin-top: 12px; }
+    legend { margin-bottom: 6px; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+    .choices { display: flex; flex-wrap: wrap; gap: 6px; }
+    .themes { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; }
+    /* Fill the grid cell so every theme option matches the tallest, whatever its preview font size. */
+    .themes label { display: flex; }
+    .themes label span { flex: 1; }
+
+    label { cursor: pointer; }
+    input { position: absolute; opacity: 0; pointer-events: none; }
+    label span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border: 2px solid var(--line);
+        border-radius: var(--radius);
+        font-size: .9rem;
+        white-space: nowrap;
+        transition: background .15s, color .15s;
+    }
+    label:hover span { background: var(--hover); }
+    input:checked + span { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+    input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Each theme option previews its own typeface. */
+    .preview-classic { font-family: "Bai Jamjuree", sans-serif; }
+    .preview-pixel { font-family: "Press Start 2P", monospace; font-size: .6rem; }
+    .preview-terminal { font-family: "VT323", monospace; font-size: 1.15rem; }
+    .preview-cartoon { font-family: "Fredoka", sans-serif; }
+    .preview-brutal { font-family: "Space Grotesk", sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .preview-glass { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; }
+}
+
+/* Anchor the menu under its gear where supported; otherwise the browser centres the popover. */
+@supports (position-area: bottom) {
+    .settings {
+        position-anchor: --settings;
+        position-area: bottom span-left;
+        position-try-fallbacks: flip-block;
+        inset: auto;
+        margin-top: 8px;
+    }
+}

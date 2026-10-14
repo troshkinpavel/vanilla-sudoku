@@ -1,7 +1,7 @@
 // Self-check for the pure board logic. Run: npm run check
-import { generateSudoku } from "./generator.ts";
-import { solveSudoku } from "./solver.ts";
-import { cellKey, computeCompleteness, computeConflicts, isComplete } from "./validation.ts";
+import { generateSudoku } from "../src/core/level-generator.ts";
+import { solveSudoku } from "../src/core/solver.ts";
+import { cellKey, computeCompleteness, computeConflicts, isComplete } from "../src/core/validation.ts";
 
 const { puzzle, solution } = generateSudoku({ difficulty: "easy" });
 const assert = (ok: boolean, msg: string) => { if (!ok) throw new Error(msg); };

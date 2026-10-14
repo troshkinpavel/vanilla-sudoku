@@ -1,0 +1,22 @@
+/* Classic theme: the default colours. */
+
+:root {
+    /* Colours as light-dark(light, dark): resolved by color-scheme, so mode switching is one attribute. */
+    /* Classic: the familiar puzzle-app palette. Navy givens, blue entries, soft blue selection, green "done". */
+    --fg: light-dark(#344861, #e3e8f0);
+    --bg: light-dark(#f3f6fb, #10141b);
+    --cell-bg: light-dark(#fff, #1a202b);
+    --line: light-dark(#344861, #8b97ab);       /* board frame, 3×3 block lines */
+    --line-soft: light-dark(#c8d0dd, #313a49);  /* lines between cells */
+    --muted: light-dark(#344861, #c9d1df);      /* givens, secondary text */
+    --accent: light-dark(#2f6fde, #78a6ff);     /* player digits, focus rings */
+    --hinted: light-dark(#1f9d6b, #4fd39a);
+    --danger: light-dark(#e0475b, #ff6b7d);
+    --complete: light-dark(#e6f6ec, #17302a);   /* finished row/column/block */
+    --peer: light-dark(#e6edf7, #222b3a);       /* selected cell's row/column/block */
+    --same: light-dark(#c6d9f4, #2c4366);       /* cells with the selected digit */
+    --selected: light-dark(#b5d1fa, #355a91);
+    --hover: light-dark(rgba(52, 72, 97, .07), rgba(255, 255, 255, .08));
+    --glass: light-dark(rgba(255, 255, 255, .45), rgba(26, 32, 43, .6)); /* keypad, dialog backdrop */
+    --pattern: light-dark(rgba(52, 72, 97, .16), rgba(255, 255, 255, .08)); /* background pattern ink */
+}
