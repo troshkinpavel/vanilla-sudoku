@@ -1,0 +1,20 @@
+{
+  "name": "vanilla-sudoku",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Framework-free Sudoku: unique-solution puzzles, 6 themes with light and dark modes, picture-in-picture.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "check": "node src/core/validation.check.ts"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vite": "npm:rolldown-vite@7.1.14"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@7.1.14"
+  }
+}

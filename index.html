@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sudoku</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;700&family=Fredoka:wght@500;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&family=VT323&display=swap"
+          rel="stylesheet">
+    <script>
+        // Restore the saved mode and theme before first paint, so the page doesn't flash the default.
+        try {
+            const saved = JSON.parse(localStorage.getItem("sudoku-settings") || "{}");
+            for (const key of ["mode", "theme"]) if (typeof saved[key] === "string") document.documentElement.dataset[key] = saved[key];
+        } catch {}
+    </script>
+</head>
+<body>
+<div id="app">
+    <div id="sudoku">
+        <header class="bar">
+            <div class="difficulty" role="group" aria-label="Difficulty">
+                <button type="button" data-difficulty="easy" title="Easy"><svg class="icon only-compact" viewBox="0 0 24 24" aria-hidden="true"><rect class="on" x="4" y="14" width="4" height="6" rx="1"/><rect x="10" y="9" width="4" height="11" rx="1"/><rect x="16" y="4" width="4" height="16" rx="1"/></svg><span class="label">Easy</span></button>
+                <button type="button" data-difficulty="medium" title="Medium"><svg class="icon only-compact" viewBox="0 0 24 24" aria-hidden="true"><rect class="on" x="4" y="14" width="4" height="6" rx="1"/><rect class="on" x="10" y="9" width="4" height="11" rx="1"/><rect x="16" y="4" width="4" height="16" rx="1"/></svg><span class="label">Medium</span></button>
+                <button type="button" data-difficulty="hard" title="Hard"><svg class="icon only-compact" viewBox="0 0 24 24" aria-hidden="true"><rect class="on" x="4" y="14" width="4" height="6" rx="1"/><rect class="on" x="10" y="9" width="4" height="11" rx="1"/><rect class="on" x="16" y="4" width="4" height="16" rx="1"/></svg><span class="label">Hard</span></button>
+            </div>
+            <div class="stats">
+                <span class="stat" title="Time"><svg class="icon only-compact" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="timer">00:00</span></span>
+                <span class="stat mistakes" title="Mistakes">
+                    <svg class="icon only-compact" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg><span class="label">Mistakes</span>
+                    <span><span id="mistakes-count">0</span>/<span id="mistakes-max">3</span></span>
+                </span>
+                <button type="button" class="action settings-btn in-header" popovertarget="settings" title="Settings" aria-label="Settings"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+            </div>
+        </header>
+        <div class="table">
+            <div class="block block_1-1">
+                <input type="number" class="cell cell_1-1" data-row="1" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="1" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="1" data-column="3" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="2" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="2" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="2" data-column="3" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="3" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="3" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="3" data-column="3" step="1" min="1" max="9"/>
+            </div>
+            <div class="block block_1-2">
+                <input type="number" class="cell cell_1-1" data-row="1" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="1" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="1" data-column="6" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="2" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="2" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="2" data-column="6" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="3" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="3" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="3" data-column="6" step="1" min="1" max="9"/>
+            </div>
+            <div class="block block_1-3">
+                <input type="number" class="cell cell_1-1" data-row="1" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="1" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="1" data-column="9" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="2" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="2" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="2" data-column="9" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="3" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="3" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="3" data-column="9" step="1" min="1" max="9"/>
+            </div>
+
+            <div class="block block_2-1">
+                <input type="number" class="cell cell_1-1" data-row="4" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="4" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="4" data-column="3" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="5" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="5" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="5" data-column="3" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="6" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="6" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="6" data-column="3" step="1" min="1" max="9"/>
+            </div>
+            <div class="block block_2-2">
+                <input type="number" class="cell cell_1-1" data-row="4" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="4" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="4" data-column="6" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="5" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="5" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="5" data-column="6" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="6" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="6" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="6" data-column="6" step="1" min="1" max="9"/>
+            </div>
+            <div class="block block_2-3">
+                <input type="number" class="cell cell_1-1" data-row="4" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="4" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="4" data-column="9" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="5" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="5" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="5" data-column="9" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="6" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="6" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="6" data-column="9" step="1" min="1" max="9"/>
+            </div>
+
+            <div class="block block_3-1">
+                <input type="number" class="cell cell_1-1" data-row="7" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="7" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="7" data-column="3" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="8" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="8" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="8" data-column="3" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="9" data-column="1" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="9" data-column="2" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="9" data-column="3" step="1" min="1" max="9"/>
+            </div>
+            <div class="block block_3-2">
+                <input type="number" class="cell cell_1-1" data-row="7" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="7" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="7" data-column="6" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="8" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="8" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="8" data-column="6" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="9" data-column="4" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="9" data-column="5" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="9" data-column="6" step="1" min="1" max="9"/>
+            </div>
+            <div class="block block_3-3">
+                <input type="number" class="cell cell_1-1" data-row="7" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-2" data-row="7" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_1-3" data-row="7" data-column="9" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-1" data-row="8" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-2" data-row="8" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_2-3" data-row="8" data-column="9" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-1" data-row="9" data-column="7" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-2" data-row="9" data-column="8" step="1" min="1" max="9"/>
+                <input type="number" class="cell cell_3-3" data-row="9" data-column="9" step="1" min="1" max="9"/>
+            </div>
+
+            <div class="keypad">
+                <button type="button" class="cell" data-value="1">1</button>
+                <button type="button" class="cell" data-value="2">2</button>
+                <button type="button" class="cell" data-value="3">3</button>
+                <button type="button" class="cell" data-value="4">4</button>
+                <button type="button" class="cell" data-value="5">5</button>
+                <button type="button" class="cell" data-value="6">6</button>
+                <button type="button" class="cell" data-value="7">7</button>
+                <button type="button" class="cell" data-value="8">8</button>
+                <button type="button" class="cell" data-value="9">9</button>
+            </div>
+        </div>
+        <footer class="bar">
+            <button type="button" class="action" id="new-game" title="New game">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg><span class="label">New game</span>
+            </button>
+            <div class="actions">
+                <button type="button" class="action" id="hint" title="Hint">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg><span class="label">Hint</span>
+                </button>
+                <button type="button" class="action" id="pip" hidden title="Keep the game on top of other windows">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><rect x="12" y="11" width="7" height="6" rx="1"/></svg><span class="label" id="pip-label">Pop out</span>
+                </button>
+                <button type="button" class="action settings-btn in-footer" popovertarget="settings" title="Settings" aria-label="Settings"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+            </div>
+        </footer>
+        <p class="hint-text">Arrows move · 1–9 enter · Backspace clears</p>
+    </div>
+    <div id="settings" class="settings" popover>
+        <fieldset>
+            <legend>Mode</legend>
+            <div class="choices">
+                <label><input type="radio" name="mode" value="auto"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>Auto</span></label>
+                <label><input type="radio" name="mode" value="light"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Light</span></label>
+                <label><input type="radio" name="mode" value="dark"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Dark</span></label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Theme</legend>
+            <div class="choices themes">
+                <label><input type="radio" name="theme" value="classic"><span class="preview-classic">Classic</span></label>
+                <label><input type="radio" name="theme" value="pixel"><span class="preview-pixel">Pixel</span></label>
+                <label><input type="radio" name="theme" value="terminal"><span class="preview-terminal">&gt;_ Terminal</span></label>
+                <label><input type="radio" name="theme" value="cartoon"><span class="preview-cartoon">Cartoon!</span></label>
+                <label><input type="radio" name="theme" value="brutal"><span class="preview-brutal">Brutal</span></label>
+                <label><input type="radio" name="theme" value="glass"><span class="preview-glass">Glass</span></label>
+            </div>
+        </fieldset>
+    </div>
+    <dialog id="result">
+        <h2 id="result-title"></h2>
+        <p id="result-text"></p>
+        <form method="dialog">
+            <button class="action" value="new">New game</button>
+        </form>
+    </dialog>
+</div>
+<div id="pip-placeholder" hidden>
+    <p>Playing in a picture-in-picture window.</p>
+    <button type="button" class="action" id="pip-return">Bring it back</button>
+</div>
+<script type="module" src="/src/index.ts"></script>
+</body>
+</html>
