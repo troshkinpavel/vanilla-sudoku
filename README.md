@@ -4,6 +4,8 @@ A Sudoku game with no frameworks: TypeScript, HTML and CSS, built with Vite.
 
 Every puzzle is generated in the browser and always has exactly one solution.
 
+![Vanilla Sudoku: the Classic theme in light mode](docs/screenshot.png)
+
 ## Features
 
 - **Three levels:** Easy, Medium and Hard. Each new puzzle is generated, never loaded from a list.
